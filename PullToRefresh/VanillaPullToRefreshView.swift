@@ -47,6 +47,7 @@ class PullToRefreshViewModel: ObservableObject {
     self.task = Task<String, Error> {
       try await self.fetch(self.count)
     }
+    defer { self.task = nil }
     
     do {
       // plucking out `value` from the task, is how we bridge the unstructured world with structured world of concurrency.

@@ -9,7 +9,7 @@
 import XCTest
 
 class RefreshableTests: XCTestCase {
-  func testVanilla() {
+  func testVanilla() async {
     let viewModel = PullToRefreshViewModel(
       fetch: { count in
         "\(count) is a good number."
@@ -18,5 +18,12 @@ class RefreshableTests: XCTestCase {
     
     viewModel.incrementButtonTapped()
     XCTAssertEqual(viewModel.count, 1)
+    
+    XCTAssertEqual(viewModel.isLoading, false)
+    
+    await viewModel.getFact()
+    
+    XCTAssertEqual(viewModel.fact, "1 is a good number.")
+    XCTAssertEqual(viewModel.isLoading, false)
   }
 }
