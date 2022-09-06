@@ -9,6 +9,8 @@ import SwiftUI
 
 class PullToRefreshViewModel: ObservableObject {
   @Published var count = 0
+  
+  // it's better to remodel this and the task with an enum, becaue we can only have 3 states, and we want to prevent indeterminate states e.g. where we have a fact and a non-nil task.
   @Published var fact: String? = nil
   
   // adding published gives the view the chance to clean up and recompute its state.
@@ -30,6 +32,7 @@ class PullToRefreshViewModel: ObservableObject {
   
   // we want to reach out to an external API service, which mean we need to do a bit of asynchronous work.
   // perfect opportunity to try out Swift's new async/await machinery.
+  @MainActor
   func getFact() async {
     self.fact = nil
     
@@ -47,6 +50,8 @@ class PullToRefreshViewModel: ObservableObject {
       // plucking out `value` from the task, is how we bridge the unstructured world with structured world of concurrency.
       let fact = try await task?.value
       withAnimation {
+        // Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
+        // the message above is what we get if we don't mark the `getFact()` function with `@MainActor` attribute.
         self.fact = fact
       }
     } catch {
