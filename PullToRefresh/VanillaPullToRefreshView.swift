@@ -24,12 +24,21 @@ class PullToRefreshViewModel: ObservableObject {
   func getFact() async {
     self.fact = nil
     
-    do {
+    // this creates a brand new async context separate the one that we get by marking `getFact()` function as async.
+    // in essence this is us leaving the structured concurrency world as we're detaching from the context provided to us.
+    let task = Task<String, Error> {
       try await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)
       
       let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(self.count)/trivia")!)
+      
+      return String(decoding: data, as: UTF8.self)
+    }
+    
+    do {
+      // plucking out `value` from the task, is how we bridge the unstructured world with structured world of concurrency.
+      let fact = try await task.value
       withAnimation {
-        self.fact = String(decoding: data, as: UTF8.self)
+        self.fact = fact
       }
     } catch {
       print(error.localizedDescription)
