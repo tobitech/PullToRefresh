@@ -11,7 +11,7 @@ import SwiftUI
 struct PullToRefreshApp: App {
   var body: some Scene {
     WindowGroup {
-      VanillaPullToRefreshView()
+      VanillaPullToRefreshView(viewModel: PullToRefreshViewModel())
     }
   }
 }
