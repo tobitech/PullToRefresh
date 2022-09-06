@@ -11,6 +11,12 @@ class PullToRefreshViewModel: ObservableObject {
   @Published var count = 0
   @Published var fact: String? = nil
   
+  private var task: Task<String, Error>?
+  
+  var isLoading: Bool {
+    self.task != nil
+  }
+  
   func incrementButtonTapped() {
     self.count += 1
   }
@@ -26,7 +32,7 @@ class PullToRefreshViewModel: ObservableObject {
     
     // this creates a brand new async context separate the one that we get by marking `getFact()` function as async.
     // in essence this is us leaving the structured concurrency world as we're detaching from the context provided to us.
-    let task = Task<String, Error> {
+    self.task = Task<String, Error> {
       try await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)
       
       let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(self.count)/trivia")!)
@@ -36,7 +42,7 @@ class PullToRefreshViewModel: ObservableObject {
     
     do {
       // plucking out `value` from the task, is how we bridge the unstructured world with structured world of concurrency.
-      let fact = try await task.value
+      let fact = try await task?.value
       withAnimation {
         self.fact = fact
       }
@@ -44,6 +50,11 @@ class PullToRefreshViewModel: ObservableObject {
       print(error.localizedDescription)
       // TODO: do some error handling
     }
+  }
+  
+  func cancelButtonTapped() {
+    self.task?.cancel()
+    self.task = nil
   }
 }
 
@@ -61,6 +72,10 @@ struct VanillaPullToRefreshView: View {
       
       if let fact = self.viewModel.fact {
         Text(fact)
+      } else if self.viewModel.isLoading {
+        Button("Cancel") {
+          self.viewModel.cancelButtonTapped()
+        }
       }
     }
     .refreshable {
