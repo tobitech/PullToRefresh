@@ -11,8 +11,11 @@ class PullToRefreshViewModel: ObservableObject {
   @Published var count = 0
   @Published var fact: String? = nil
   
-  private var task: Task<String, Error>?
+  // adding published gives the view the chance to clean up and recompute its state.
+  @Published private var task: Task<String, Error>?
   
+  // to force isLoading to actually be observed by the view, we have to mark every property it's referecing as `@Published`.
+  // it's a general gotcha of using computed properties.
   var isLoading: Bool {
     self.task != nil
   }
