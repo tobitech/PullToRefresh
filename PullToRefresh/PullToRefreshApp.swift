@@ -11,7 +11,17 @@ import SwiftUI
 struct PullToRefreshApp: App {
   var body: some Scene {
     WindowGroup {
-      VanillaPullToRefreshView(viewModel: PullToRefreshViewModel())
+      VanillaPullToRefreshView(
+        viewModel: PullToRefreshViewModel(
+          fetch: { count in
+            try await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)
+            
+            let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(count)/trivia")!)
+            
+            return String(decoding: data, as: UTF8.self)
+          }
+        )
+      )
     }
   }
 }

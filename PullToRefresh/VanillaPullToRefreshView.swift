@@ -16,6 +16,12 @@ class PullToRefreshViewModel: ObservableObject {
   // adding published gives the view the chance to clean up and recompute its state.
   @Published private var task: Task<String, Error>?
   
+  let fetch: (Int) async throws -> String
+  
+  init(fetch: @escaping (Int) async throws -> String) {
+    self.fetch = fetch
+  }
+  
   // to force isLoading to actually be observed by the view, we have to mark every property it's referecing as `@Published`.
   // it's a general gotcha of using computed properties.
   var isLoading: Bool {
@@ -39,11 +45,7 @@ class PullToRefreshViewModel: ObservableObject {
     // this creates a brand new async context separate the one that we get by marking `getFact()` function as async.
     // in essence this is us leaving the structured concurrency world as we're detaching from the context provided to us.
     self.task = Task<String, Error> {
-      try await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)
-      
-      let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(self.count)/trivia")!)
-      
-      return String(decoding: data, as: UTF8.self)
+      try await self.fetch(self.count)
     }
     
     do {
@@ -94,6 +96,16 @@ struct VanillaPullToRefreshView: View {
 
 struct VanillaPullToRefreshView_Previews: PreviewProvider {
   static var previews: some View {
-    VanillaPullToRefreshView(viewModel: PullToRefreshViewModel())
+    VanillaPullToRefreshView(
+      viewModel: PullToRefreshViewModel(
+        fetch: { count in
+          try await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)
+          
+          let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(count)/trivia")!)
+          
+          return String(decoding: data, as: UTF8.self)
+        }
+      )
+    )
   }
 }
