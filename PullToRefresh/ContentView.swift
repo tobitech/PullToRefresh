@@ -7,15 +7,26 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct VanillaPullToRefreshView: View {
   var body: some View {
-    Text("Hello, world!")
-      .padding()
+    List  {
+      HStack {
+        Button("-") { }
+        Text("0")
+        Button("+") { }
+      }
+      .buttonStyle(.plain)
+      
+      Text("0 is a good number.")
+    }
+    .refreshable {
+      
+    }
   }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct VanillaPullToRefreshView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    VanillaPullToRefreshView()
   }
 }
