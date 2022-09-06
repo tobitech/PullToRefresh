@@ -20,6 +20,7 @@
 		20162BBB28C783DA0094E7DA /* VanillaPullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VanillaPullToRefreshView.swift; sourceTree = "<group>"; };
 		20162BBD28C783DC0094E7DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20162BC028C783DC0094E7DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		20162BCA28C78C920094E7DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +54,7 @@
 		20162BB828C783DA0094E7DA /* PullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				20162BCA28C78C920094E7DA /* Info.plist */,
 				20162BB928C783DA0094E7DA /* PullToRefreshApp.swift */,
 				20162BBB28C783DA0094E7DA /* VanillaPullToRefreshView.swift */,
 				20162BBD28C783DC0094E7DA /* Assets.xcassets */,
@@ -278,6 +280,7 @@
 				DEVELOPMENT_TEAM = J8A5ZAM5GV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PullToRefresh/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -307,6 +310,7 @@
 				DEVELOPMENT_TEAM = J8A5ZAM5GV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PullToRefresh/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

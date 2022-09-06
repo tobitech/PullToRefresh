@@ -21,8 +21,14 @@ class PullToRefreshViewModel: ObservableObject {
   
   // we want to reach out to an external API service, which mean we need to do a bit of asynchronous work.
   // perfect opportunity to try out Swift's new async/await machinery.
-  func getFact() {
-    // ???
+  func getFact() async {
+    do {
+      let (data, _) = try await URLSession.shared.data(from: .init(string: "http://numbersapi.com/\(self.count)/trivia")!)
+      self.fact = String(decoding: data, as: UTF8.self)
+    } catch {
+      print(error.localizedDescription)
+      // TODO: do some error handling
+    }
   }
 }
 
@@ -43,7 +49,7 @@ struct VanillaPullToRefreshView: View {
       }
     }
     .refreshable {
-      self.viewModel.getFact()
+      await self.viewModel.getFact()
     }
   }
 }
