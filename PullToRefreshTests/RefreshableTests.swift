@@ -34,6 +34,31 @@ class RefreshableTests: XCTestCase {
     }
   }
   
+  func testTCA_Cancellation() {
+    let mainQueue = DispatchQueue.test
+    
+    let store = TestStore(
+      initialState: .init(),
+      reducer: pullToRefreshReducer,
+      environment: .init(
+        fact: .init(fetch: { .init(value: "\($0) is a good number.") }),
+        mainQueue: mainQueue.eraseToAnyScheduler()
+      )
+    )
+    
+    store.send(.incrementButtonTapped) {
+      $0.count = 1
+    }
+    
+    store.send(.refresh) {
+      $0.isLoading = true
+    }
+    
+    store.send(.cancelButtonTapped) {
+      $0.isLoading = false
+    }
+  }
+  
   func testVanilla() async {
     let viewModel = PullToRefreshViewModel(
       fetch: { count in
