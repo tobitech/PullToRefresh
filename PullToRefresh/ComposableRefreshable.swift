@@ -61,10 +61,11 @@ let pullToRefreshReducer = Reducer<PullToRefreshState, PullToRefreshAction, Pull
     return .none
 
   case .refresh:
+    state.fact = nil
     state.isLoading = true
     return environment.fact.fetch(state.count)
       // .receive(on: environment.mainQueue)
-      .delay(for: .seconds(2), scheduler: environment.mainQueue)
+      .delay(for: .seconds(2), scheduler: environment.mainQueue.animation())
       .catchToEffect()
       .map(PullToRefreshAction.factResponse)
       // .cancellable(id: "refresh")
@@ -94,11 +95,12 @@ struct PullToRefreshView: View {
       if let fact = self.viewStore.fact {
         Text(fact)
       }
-//      else if self.viewModel.isLoading {
-//        Button("Cancel") {
-//          self.viewStore.send(.cancelButtonTapped)
-//        }
-//      }
+      
+      if self.viewStore.isLoading {
+        Button("Cancel") {
+          self.viewStore.send(.cancelButtonTapped, animation: .default)
+        }
+      }
     }
     .refreshable {
       await self.viewStore.send(.refresh, while: \.isLoading)
