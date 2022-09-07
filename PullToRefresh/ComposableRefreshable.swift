@@ -16,7 +16,7 @@ struct PullToRefreshState: Equatable {
   var isLoading = false
 }
 
-enum PullToRefreshAction {
+enum PullToRefreshAction: Equatable {
   case cancelButtonTapped
   case decrementButtonTapped
   case factResponse(Result<String, FactClient.Error>)
