@@ -5,6 +5,7 @@
 //  Created by Oluwatobi Omotayo on 07/09/2022.
 //
 
+import Combine
 import ComposableArchitecture
 import Foundation
 import SwiftUI
@@ -12,6 +13,7 @@ import SwiftUI
 struct PullToRefreshState: Equatable {
   var count = 0
   var fact: String?
+  var isLoading = false
 }
 
 enum PullToRefreshAction {
@@ -33,6 +35,7 @@ let pullToRefreshReducer = Reducer<PullToRefreshState, PullToRefreshAction, Pull
   
   switch action {
   case .cancelButtonTapped:
+    state.isLoading = false
     // it's stronger to use a dedicated type,
     // than a word that can be accidentally made up.
     // return .cancel(id: "refresh")
@@ -43,10 +46,12 @@ let pullToRefreshReducer = Reducer<PullToRefreshState, PullToRefreshAction, Pull
     return .none
 
   case let .factResponse(.success(fact)):
+    state.isLoading = false
     state.fact = fact
     return .none
     
   case let .factResponse(.failure(error)):
+    state.isLoading = false
     // TODO: handle error
     print(error.localizedDescription)
     return .none
@@ -56,6 +61,7 @@ let pullToRefreshReducer = Reducer<PullToRefreshState, PullToRefreshAction, Pull
     return .none
 
   case .refresh:
+    state.isLoading = true
     return environment.fact.fetch(state.count)
       // .receive(on: environment.mainQueue)
       .delay(for: .seconds(2), scheduler: environment.mainQueue)
@@ -95,10 +101,42 @@ struct PullToRefreshView: View {
 //      }
     }
     .refreshable {
-      self.viewStore.send(.refresh)
+      await self.viewStore.send(.refresh, while: \.isLoading)
     }
   }
 }
+
+/*
+extension ViewStore {
+  func send(
+    _ action: Action,
+    `while` isInFlight: @escaping (State) -> Bool
+  ) async {
+    self.send(action)
+    
+    // this function can help us turn non-async await code into async await code
+    // this shows how to bridge non-async-await code into async-await code
+    // note that we had to simulate an asynchronous work with old school `asyncAfter` rather than returning the number 42 immediately.
+//    let number = await withUnsafeContinuation { continuation in
+//      DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//        continuation.resume(returning: 42)
+//      }
+//    }
+    
+    await withUnsafeContinuation { (continuation: UnsafeContinuation<Void, Never>) in
+      var cancellable: Cancellable?
+      
+      cancellable = self.publisher
+        .filter { !isInFlight($0) }
+        .prefix(1)
+        .sink { _ in
+          continuation.resume()
+          _ = cancellable // make sure the subscription is alive as long as the predicate is false.
+        }
+    }
+  }
+}
+*/
 
 struct PullToRefreshView_Previews: PreviewProvider {
   static var previews: some View {
