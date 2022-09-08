@@ -13,6 +13,8 @@
 		20162BC128C783DC0094E7DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20162BC028C783DC0094E7DA /* Preview Assets.xcassets */; };
 		20162BC928C786730094E7DA /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 20162BC828C786730094E7DA /* ComposableArchitecture */; };
 		20162BE928C79D960094E7DA /* RefreshableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20162BCB28C79D500094E7DA /* RefreshableTests.swift */; };
+		20A042F628C8826D00B64052 /* ComposableRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A042F528C8826D00B64052 /* ComposableRefreshable.swift */; };
+		20A042F828C8839000B64052 /* FactClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A042F728C8839000B64052 /* FactClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,8 @@
 		20162BCA28C78C920094E7DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		20162BCB28C79D500094E7DA /* RefreshableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableTests.swift; sourceTree = "<group>"; };
 		20162BE028C79D8D0094E7DA /* PullToRefreshTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PullToRefreshTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		20A042F528C8826D00B64052 /* ComposableRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableRefreshable.swift; sourceTree = "<group>"; };
+		20A042F728C8839000B64052 /* FactClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				20162BCA28C78C920094E7DA /* Info.plist */,
 				20162BB928C783DA0094E7DA /* PullToRefreshApp.swift */,
 				20162BBB28C783DA0094E7DA /* VanillaPullToRefreshView.swift */,
+				20A042F528C8826D00B64052 /* ComposableRefreshable.swift */,
+				20A042F728C8839000B64052 /* FactClient.swift */,
 				20162BBD28C783DC0094E7DA /* Assets.xcassets */,
 				20162BBF28C783DC0094E7DA /* Preview Content */,
 			);
@@ -207,6 +213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20A042F828C8839000B64052 /* FactClient.swift in Sources */,
+				20A042F628C8826D00B64052 /* ComposableRefreshable.swift in Sources */,
 				20162BBC28C783DA0094E7DA /* VanillaPullToRefreshView.swift in Sources */,
 				20162BBA28C783DA0094E7DA /* PullToRefreshApp.swift in Sources */,
 			);
