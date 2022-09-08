@@ -16,6 +16,7 @@
 		20A042F628C8826D00B64052 /* ComposableRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A042F528C8826D00B64052 /* ComposableRefreshable.swift */; };
 		20A042F828C8839000B64052 /* FactClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A042F728C8839000B64052 /* FactClient.swift */; };
 		20F42AD528C9E71E00AABF61 /* FocusState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F42AD428C9E71E00AABF61 /* FocusState.swift */; };
+		20F42AD728C9F38600AABF61 /* ComposableFocusState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F42AD628C9F38600AABF61 /* ComposableFocusState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		20A042F528C8826D00B64052 /* ComposableRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableRefreshable.swift; sourceTree = "<group>"; };
 		20A042F728C8839000B64052 /* FactClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactClient.swift; sourceTree = "<group>"; };
 		20F42AD428C9E71E00AABF61 /* FocusState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusState.swift; sourceTree = "<group>"; };
+		20F42AD628C9F38600AABF61 /* ComposableFocusState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableFocusState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				20A042F528C8826D00B64052 /* ComposableRefreshable.swift */,
 				20A042F728C8839000B64052 /* FactClient.swift */,
 				20F42AD428C9E71E00AABF61 /* FocusState.swift */,
+				20F42AD628C9F38600AABF61 /* ComposableFocusState.swift */,
 				20162BBD28C783DC0094E7DA /* Assets.xcassets */,
 				20162BBF28C783DC0094E7DA /* Preview Content */,
 			);
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20A042F828C8839000B64052 /* FactClient.swift in Sources */,
+				20F42AD728C9F38600AABF61 /* ComposableFocusState.swift in Sources */,
 				20A042F628C8826D00B64052 /* ComposableRefreshable.swift in Sources */,
 				20162BBC28C783DA0094E7DA /* VanillaPullToRefreshView.swift in Sources */,
 				20F42AD528C9E71E00AABF61 /* FocusState.swift in Sources */,

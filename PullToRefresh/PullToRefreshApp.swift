@@ -11,7 +11,13 @@ import SwiftUI
 struct PullToRefreshApp: App {
   var body: some Scene {
     WindowGroup {
-      LoginForm(viewModel: .init())
+      TCALoginView(
+        store: .init(
+          initialState: .init(),
+          reducer: loginReducer,
+          environment: .init()
+        )
+      )
     }
   }
 }
