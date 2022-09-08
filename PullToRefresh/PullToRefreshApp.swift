@@ -11,16 +11,7 @@ import SwiftUI
 struct PullToRefreshApp: App {
   var body: some Scene {
     WindowGroup {
-      PullToRefreshView(
-        store: .init(
-          initialState: .init(),
-          reducer: pullToRefreshReducer,
-          environment: .init(
-            fact: .live,
-            mainQueue: .main
-          )
-        )
-      )
+      LoginForm()
     }
   }
 }
