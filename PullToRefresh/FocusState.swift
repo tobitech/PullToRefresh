@@ -59,11 +59,12 @@ struct LoginForm: View {
       
       Text("\(String(describing: self.viewModel.focusedField))")
     }
-    .onChange(of: self.viewModel.focusedField) { newValue in
-      self.focusedField = newValue
-    }
-    .onChange(of: self.focusedField) { newValue in
-      self.viewModel.focusedField = newValue
-    }
+//    .onChange(of: self.viewModel.focusedField) { newValue in
+//      self.focusedField = newValue
+//    }
+//    .onChange(of: self.focusedField) { newValue in
+//      self.viewModel.focusedField = newValue
+//    }
+    .synchronize(self.$viewModel.focusedField, self.$focusedField)
   }
 }

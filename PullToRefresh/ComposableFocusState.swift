@@ -68,11 +68,45 @@ struct TCALoginView: View {
       
       Text("\(String(describing: self.viewStore.focusField))")
     }
-    .onChange(of: self.viewStore.focusField) { newValue in
-      self.focusedField = newValue
-    }
-    .onChange(of: self.focusedField) { newValue in
-      self.viewStore.send(.binding(.set(\.focusField, newValue)))
-    }
+//    .onChange(of: self.viewStore.focusField) { newValue in
+//      self.focusedField = newValue
+//    }
+//    .onChange(of: self.focusedField) { newValue in
+//      self.viewStore.send(.binding(.set(\.focusField, newValue)))
+//    }
+    .synchronize(
+      self.viewStore.binding(\.$focusField),
+      self.$focusedField
+    )
+  }
+}
+
+extension View {
+//  func synchronize<Value: Equatable>(
+//    _ first: Binding<Value>,
+//    _ second: Binding<Value>
+//  ) -> some View {
+//    self
+//      .onChange(of: first.wrappedValue) { second.wrappedValue = $0 }
+//      .onChange(of: second.wrappedValue) { first.wrappedValue = $0 }
+//  }
+  
+  // hopefully this will be possible some day in Swift to have `PropertyWrapper` as a protocol.
+//  func synchronize<A, B>(
+//    _ first: A,
+//    _ second: B
+//  ) where A: PropertyWrapper, B: PropertyWrapper, A.Wrapped == B.Wrapped -> some View {
+//    self
+//      .onChange(of: first.wrappedValue) { second.wrappedValue = $0 }
+//      .onChange(of: second.wrappedValue) { first.wrappedValue = $0 }
+//  }
+  
+  func synchronize<Value: Equatable>(
+    _ first: Binding<Value>,
+    _ second: FocusState<Value>.Binding
+  ) -> some View {
+    self
+      .onChange(of: first.wrappedValue) { second.wrappedValue = $0 }
+      .onChange(of: second.wrappedValue) { first.wrappedValue = $0 }
   }
 }
